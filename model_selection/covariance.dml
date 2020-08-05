@@ -1,0 +1,64 @@
+/*
+ * Covariance Functions
+ */
+
+# hyperparameters
+hypers = matrix(1, rows=6, cols=1)
+
+# initial values
+amplitude = as.scalar( exp(hypers[1,]) )
+noise     = as.scalar( exp(hypers[2,]) )
+lenScale  = exp(hypers[3:6,])
+
+SE = function(matrix[double] X, matrix[double] lenScale)
+  return (matrix[double] out) {
+
+  lenScale = matrix(1, rows=nrow(lenScale), cols=1)
+  r = (2* X * t(X)) - sum (X*X) - sum(X*X)
+
+  out = exp ( -0.5 * ( r^2/lenScale ) )
+}
+
+X = rand(rows=4, cols=4)
+
+tmp = SE(X, lenScale)
+
+for(i in 1:4) {
+  for(j in 1:4) {
+    print(i+","+j+" "+ as.scalar(tmp[i,j]))
+  }
+}
+
+# covariance matrix for one dimension at first
+
+X = matrix("1
+            2
+            3", rows=3, cols=1)
+
+Xt = t(X)
+
+#K(d=1) = matrix("1-1 1-2 1-3
+#                 2-1 2-2 2-3
+#                 3-1 3-2 3-3", rows=3,cols=3);
+
+#k(1,1) = X[1:3,1] - Xt[1,1:3]
+
+#X[1:3,1] - Xt[1,1:3]
+
+Xd = X[1:3,1]
+# for d = 1;
+for(n in 2:3) {
+  Xd = cbind(Xd, X[1:3,1])
+}
+
+/*
+Xd = matrix("1 1 1
+             2 2 2
+             3 3 3", rows=3, cols=3);
+*/
+
+for(i in 1:3) { #rows
+  for(j in 1:3) {#cols
+    print(as.scalar(Xd[i,j]);
+  }
+}
